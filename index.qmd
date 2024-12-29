@@ -1,0 +1,242 @@
+---
+title: "Hello, Quarto!"
+author: Sean Lin
+author-title: "作者"
+date: 2024/12/18
+published-title: "開始日期"
+date-modified: now
+date-format: "YYYY[年]M[月]D[日]"
+
+execute: 
+  echo: true
+  eval: true
+  warning: false
+
+format: 
+  html: 
+    title-block-banner: images/wave_02.jpg
+    title-block-banner-color: "turquoise"
+    code-fold: false
+    code-tools: false
+    theme: 
+      light: Minty
+      dark: Darkly
+    toc: true
+    toc-title: Contents
+    toc-depth: 2
+    toc-expand: false
+    toc-location: left
+    anchor-sections: true
+    link-external-icon: true
+    link-external-newwindow: true
+  gfm: 
+    identifier-prefix: readme # 標示符
+    # preview-mode: raw # 查看原始markdown
+    keep-yaml: true
+    toc: true
+    toc-depth: 1
+    number-sections: true
+    citation-location: document
+    output-file: "README.md" # 輸出文檔名
+
+crossref: 
+  fig-title: 圖
+  tbl-title: 表
+  title-delim: ": "
+  fig-prefix: 圖
+  tbl-prefix: 表
+  sec-prefix: 章節
+  fig-labels: arabic
+  tbl-labels: arabic
+  subref-labels: alpha A
+  
+number-sections: true
+editor: visual
+bibliography: references.bib
+citation-location: document
+---
+
+# Introduction
+
+## Data
+
+Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
+
+```{r}
+#| label: load-packages
+#| echo: true
+#| message: false
+
+library(tidyverse)
+library(ggthemes)
+library(palmerpenguins)
+
+glimpse(penguins)
+```
+
+## Plot
+
+I would like to show you a simple boxplot.
+
+```{r}
+#| eval: true
+#| label: fig-boxplot
+#| fig-cap: "Boxplot: 1-100"
+
+boxplot(1:100)
+```
+
+How about a scatterplot sample?
+
+```{r}
+#| eval: true
+#| label: fig-scatterplot
+#| fig-cap: "Scatterplot: 38 vehicles"
+#| fig-width: 6
+#| fig-height: 3
+
+library(ggplot2)
+
+ggplot(mpg, aes(x = hwy, y = cty, color = cyl)) + 
+  geom_point(alpha = 0.5, size = 2) + 
+  scale_color_viridis_c() + 
+  theme_minimal()
+```
+
+Let us go through these two charts.
+
+```{r}
+#| eval: true
+#| layout-ncol: 2
+#| label: fig-bundle-charts
+#| fig-cap: 
+#|   - "Speed and Distance"
+#|   - "Pressure and Temperature"
+
+plot(cars)
+plot(pressure)
+```
+
+How about changing the expression on the titles?
+
+```{r}
+#| eval: true
+#| layout-ncol: 2
+#| label: fig-bundle-charts-modified-0
+#| fig-cap: "Bundle charts"
+#| fig-subcap: 
+#|   - "Speed and Distance"
+#|   - "Pressure and Temperature"
+
+plot(cars)
+plot(pressure)
+```
+
+Looks better, huh? What if we wanna change a bit about the layout?
+
+```{r}
+#| eval: true
+#| echo: fenced
+#| layout: [[1],[1, 1]]
+#| label: fig-bundle-charts-modified-1
+#| fig-cap: "Bundle charts"
+#| fig-subcap: 
+#|   - "Speed and Distance"
+#|   - "Pressure and Temperature"
+#|   - "mtcars"
+
+plot(cars)
+plot(pressure)
+plot(mtcars)
+```
+
+```{r}
+#| eval: true
+#| echo: fenced
+#| layout: [[100],[30, 70]]
+#| label: fig-bundle-charts-modified-2
+#| fig-cap: "Bundle charts"
+#| fig-subcap: 
+#|   - "Speed and Distance"
+#|   - "Pressure and Temperature"
+#|   - "mtcars"
+
+plot(cars)
+plot(pressure)
+plot(mtcars)
+```
+
+```{r}
+#| eval: true
+#| echo: fenced
+#| layout: [[40, -20, 40],[100]]
+#| label: fig-bundle-charts-modified-3
+#| fig-cap: "Bundle charts"
+#| fig-subcap: 
+#|   - "Speed and Distance"
+#|   - "Pressure and Temperature"
+#|   - "mtcars"
+
+plot(cars)
+plot(pressure)
+plot(mtcars)
+```
+
+## Graph
+
+Now we may take a look at how to insert graphics into the essay.
+
+::: {#fig-demo}
+\![\](images/wave_01.jpg){}
+
+\![\](images/wave_02.jpg){}
+
+cross-reference-setup
+:::
+
+```{r}
+#| eval: true
+#| label: tbl-iris
+#| tbl-cap: "Iris數據"
+
+library(knitr)
+kable(head(iris))
+```
+
+## Citation
+
+[@mardani2020]
+
+::: callout-note
+## a
+
+looks like this
+:::
+
+::: callout-tip
+## b
+
+looks like this
+:::
+
+::: callout-important
+## c
+
+looks like this
+:::
+
+::: callout-caution
+## d
+
+looks like this
+:::
+
+::: callout-warning
+## e
+
+looks like this
+:::
+
+{{< video https://www.youtube.com/embed/wo9vZccmqwc >}}
+
+I want this linking to [knitr](https://yihui.org/knitr/).
